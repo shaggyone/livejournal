@@ -2,6 +2,7 @@ require 'xml/libxml/xmlrpc'
 require 'digest'
 require 'net/http'
 
+module LiveJournal
 class LiveJournal
   def initialize(params)
     @host = params[:host] || 'livejournal.com'
@@ -75,4 +76,5 @@ class LiveJournal
     
     @lj.call('LJ.XMLRPC.editevent', args).parse!.first    
   end
+end
 end
