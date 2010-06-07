@@ -3,7 +3,7 @@ require 'digest'
 require 'net/http'
 
 module LiveJournal
-  class LiveJournalRaw < XML::XMLRPC::Client
+  class Raw < XML::XMLRPC::Client
     alias inheritedCall call
     
     def call(methodName, *args)
@@ -11,7 +11,7 @@ module LiveJournal
     end
   end
   
-class LiveJournal
+class Main
   def initialize(params)
     @host = params[:host] || 'livejournal.com'
     @path = params[:path] || '/interface/xmlrpc'
@@ -19,7 +19,7 @@ class LiveJournal
     @password = params[:password]
     
     @http = Net::HTTP.new(@host)
-    @lj = LiveJournalRaw.new(@http, @path)
+    @lj = Raw.new(@http, @path)
   end
   
   def get_challenge()
