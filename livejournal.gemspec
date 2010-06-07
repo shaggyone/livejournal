@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
 # s.require_path = "lib"
 
   s.extra_rdoc_files = Dir["*.rdoc"]
-# s.rdoc_options = ["--charset=UTF-8", "--exclude=lib/tiny_mce/assets"]
 
   s.required_rubygems_version = ">= 1.3.4"
   s.autorequire = "livejournal"
