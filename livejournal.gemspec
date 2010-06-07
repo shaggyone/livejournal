@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name = "livejournal"
   s.version = "0.1"
   s.authors = ["Victor Zagorski"]
-  s.email = "vzagorski@inbox.ru
+  s.email = "vzagorski@inbox.ru"
   s.homepage = 'http://github.com/shaggyone/livejournal'
   s.summary = 'Livejournal allows you to post, update, delete records from livejournal. Using their XMLRPC API, of course. API can be found at: http://www.livejournal.com/doc/server/ljp.csp.xml-rpc.protocol.html'
   s.description = "Same as summary."
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_path = "lib"
 
   s.extra_rdoc_files = Dir["*.rdoc"]
-  s.rdoc_options = ["--charset=UTF-8", "--exclude=lib/tiny_mce/assets"]
+# s.rdoc_options = ["--charset=UTF-8", "--exclude=lib/tiny_mce/assets"]
 
   s.required_rubygems_version = ">= 1.3.4"
   s.autorequire = "livejournal"
