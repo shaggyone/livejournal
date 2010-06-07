@@ -1,0 +1,7 @@
+This gem is (or 'll be) designed, to make cross posts to livejournal.
+
+At first it contains class, that allows you to access livejournal API. For example, if you want.
+
+Next I plan to make it possible to create crossposts from you own design blog. Most possibly, using ActionView classes, for creating crossposted messages.
+
+And step 2, I'm, thinking of making crossposter api (possibly with another gem), that'll use cron-like and uviversal crosspost API to make crossposts to some blogs.
