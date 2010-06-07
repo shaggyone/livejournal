@@ -3,6 +3,14 @@ require 'digest'
 require 'net/http'
 
 module LiveJournal
+  class LiveJournalRaw < XML::XMLRPC::Client
+    alias inheritedCall call
+    
+    def call(methodName, *args)
+      inheritedCall("LJ.XMLRPC." + methodName.to_s, *args)
+    end
+  end
+  
 class LiveJournal
   def initialize(params)
     @host = params[:host] || 'livejournal.com'
@@ -11,11 +19,11 @@ class LiveJournal
     @password = params[:password]
     
     @http = Net::HTTP.new(@host)
-    @lj = XML::XMLRPC::Client.new(@http, @path)
+    @lj = LiveJournalRaw.new(@http, @path)
   end
   
   def get_challenge()
-    @lj.call('LJ.XMLRPC.getchallenge').parse!.first[:challenge]
+    @lj.getchallenge().parse!.first[:challenge]
   end
   
   def auth_args
@@ -24,7 +32,7 @@ class LiveJournal
   end 
   
   def login()
-    @lj.call('LJ.XMLRPC.login', auth_args).parse!.first
+    @lj.login(auth_args).parse!.first
   end
   
   def create_post(params)
@@ -43,7 +51,7 @@ class LiveJournal
     args[:min]    = dt.min
     args[:usejournal] = params[:username] || @username
     
-    @lj.call('LJ.XMLRPC.postevent', args).parse!.first    
+    @lj.postevent(args).parse!.first    
   end
   
   def update_post(itemid, params)
@@ -63,7 +71,7 @@ class LiveJournal
     args[:min]    = dt.min
     args[:usejournal] = params[:username] || @username
     
-    @lj.call('LJ.XMLRPC.editevent', args).parse!.first    
+    @lj.editeven(args).parse!.first    
   end    
   
   def delete_post(itemid,  params={})
@@ -74,7 +82,7 @@ class LiveJournal
     args[:event] = ""
     args[:usejournal] = params[:username] || @username
     
-    @lj.call('LJ.XMLRPC.editevent', args).parse!.first    
+    @lj.editevent(args).parse!.first    
   end
 end
 end
