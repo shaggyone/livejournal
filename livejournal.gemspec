@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8", "--exclude=lib/tiny_mce/assets"]
 
   s.required_rubygems_version = ">= 1.3.4"
-# s.autorequire = "treetop" this line was taken from another gem
+  s.autorequire = "livejournal"
   s.has_rdoc = false
   s.add_dependency "libxml-xmlrpc", ">= 0.1.5"
 end
