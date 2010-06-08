@@ -29,7 +29,25 @@ class Main
   def auth_args
     challenge = get_challenge()
     {:username=>@username, :auth_method=>'challenge', :auth_challenge=>challenge, :auth_response=>Digest::MD5.hexdigest(challenge + Digest::MD5.hexdigest(@password))}
-  end 
+  end
+  
+  def post_args(params)
+    args = {}
+    args[:ver] = 0
+        
+    args[:subject] = params[:subject] || "No subject"
+    args[:event] = params[:body] || "No body"
+    
+    args[:security] = params[:security] || 'public'
+    args[:allowmask] = params[:allowmask] unless params[:allowmask].blank?
+    dt = params[:datetime] || DateTime.now
+    args[:year]   = dt.year
+    args[:mon]    = dt.month
+    args[:day]    = dt.day.
+    args[:hour]   = dt.hour
+    args[:min]    = dt.min
+    args[:usejournal] = params[:username] || @username
+  end
   
   def login()
     @lj.login(auth_args).parse!.first
@@ -37,40 +55,15 @@ class Main
   
   def create_post(params)
     args = auth_args
-    args[:ver] = 0
-    args[:subject] = params[:subject] || "No subject"
-    args[:event] = params[:body] || "No body"
-    
-    args[:security] = params[:security] || 'public'
-    args[:allowmask] = params[:allowmask] unless params[:allowmask].blank?
-    dt = params[:datetime] || DateTime.now
-    args[:year]   = dt.year
-    args[:mon]    = dt.month
-    args[:day]    = dt.day 
-    args[:hour]   = dt.hour
-    args[:min]    = dt.min
-    args[:usejournal] = params[:username] || @username
+    args.merge!(post_args(params))
     
     @lj.postevent(args).parse!.first    
   end
   
   def update_post(itemid, params)
     args = auth_args
-    args[:ver] = 0
+    args.merge!(post_args(params))
     args[:itemid] = itemid
-    args[:subject] = params[:subject] || "No subject"
-    args[:event] = params[:body] || "No body"
-    
-    args[:security] = params[:security] || 'public'
-    args[:allowmask] = params[:allowmask] unless params[:allowmask].blank?
-    dt = params[:datetime] || DateTime.now
-    args[:year]   = dt.year
-    args[:mon]    = dt.month
-    args[:day]    = dt.day 
-    args[:hour]   = dt.hour
-    args[:min]    = dt.min
-    args[:usejournal] = params[:username] || @username
-    
     @lj.editeven(args).parse!.first    
   end    
   
