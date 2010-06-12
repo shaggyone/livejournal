@@ -1,4 +1,4 @@
 LiveJournalTest.class_eval do
-  @@username = 'username'
+  @@username = 'uzver'
   @@password = 'password'
 end
