@@ -4,10 +4,13 @@ require 'net/http'
 
 module LiveJournal
   class Raw < XML::XMLRPC::Client
-    alias inheritedCall call
+
+    def method_missing(*args)
+      self.call2(*args)
+    end   
     
-    def call(methodName, *args)
-      inheritedCall("LJ.XMLRPC." + methodName.to_s, *args)
+    def call2(methodName, *args)
+      call("LJ.XMLRPC." + methodName.to_s, *args)
     end
   end
 
@@ -39,7 +42,7 @@ class Main
     args[:event] = params[:body] || "No body"
 
     args[:security] = params[:security] || 'public'
-    args[:allowmask] = params[:allowmask] unless params[:allowmask].blank?
+    args[:allowmask] = params[:allowmask] unless params[:allowmask].nil?
     dt = params[:datetime] || DateTime.now
     args[:year]   = dt.year
     args[:mon]    = dt.month
